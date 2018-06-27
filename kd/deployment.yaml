@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: pttg-mongodb
-        image: quay.io/ukhomeofficedigital/pttg-test-mongodb:{{.VERSION}}
+        image: quay.io/ukhomeofficedigital/pttg-mongodb:{{.VERSION}}
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
