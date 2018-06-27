@@ -3,6 +3,10 @@
 export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export KUBE_SERVER=${KUBE_SERVER}
 
+if [[ -z ${VERSION} ]] ; then
+    export VERSION=${IMAGE_VERSION}
+fi
+
 if [[ ${ENVIRONMENT} == "pr" ]] ; then
     echo "deploy ${VERSION} to pr namespace, using PTTG_FS_PR drone secret"
     export KUBE_TOKEN=${PTTG_FS_PR}
