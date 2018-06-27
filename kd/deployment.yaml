@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: pttg-mongodb
   labels:
-    name: pttg-mongodb
+    version: {{.VERSION}}
 spec:
   replicas: 1
   selector:
@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         name: pttg-mongodb
+        version: {{.VERSION}}
     spec:
       containers:
       - name: pttg-mongodb
@@ -21,6 +22,10 @@ spec:
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
+          capabilities:
+            drop:
+             - SETUID
+             - SETGID
         env:
           - name: JAVA_OPTS
             value: "-Xms512m -Xmx768m"
