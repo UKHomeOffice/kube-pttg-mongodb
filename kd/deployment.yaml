@@ -1,0 +1,40 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pttg-mongodb
+  labels:
+    name: pttg-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: pttg-mongodb
+  template:
+    metadata:
+      labels:
+        name: pttg-mongodb
+    spec:
+      containers:
+      - name: pttg-mongodb
+        image: quay.io/ukhomeofficedigital/pttg-test-mongodb:{{.VERSION}}
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+        env:
+          - name: JAVA_OPTS
+            value: "-Xms512m -Xmx768m"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        ports:
+          - containerPort: 27017
+        livenessProbe:
+          tcpSocket:
+            port: 27017
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
